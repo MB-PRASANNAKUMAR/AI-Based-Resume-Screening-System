@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Job Overview</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body class="admin">
+
+<div class="container dashboard">
+
+    <!-- ================= NAVBAR ================= -->
+    <div class="navbar" style ="padding: 50px; border-radius:25px;">
+        <h2 class="nav-title" style="font-size: 30px;margin-right: 175px;">📋 Admin Job Overview</h2>
+        <div class="nav-right">
+            <a href="/head/dashboard" class="btn">⬅ Back</a>
+            <a href="/logout" class="btn btn-danger">Logout</a>
+        </div>
+    </div>
+
+    <!-- ================= ADMIN INFO ================= -->
+    <div class="info-box">
+        <h3>👨‍💼 Admin Details</h3>
+        <p><strong>Name:</strong> {{ admin.name }}</p>
+        <p><strong>Email:</strong> {{ admin.email }}</p>
+    </div>
+
+    <!-- ================= JOB TABLE ================= -->
+    <h3 style="margin-top:25px;">📌 Job Openings</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Job Title</th>
+                <th>Experience</th>
+                <th>Openings</th>
+                <th>Status</th>
+                <th>Total Applicants</th>
+                <th>Selected</th>
+                <th>Remaining</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for job in jobs %}
+            <tr>
+                <td><strong>{{ job.title }}</strong></td>
+                <td>{{ job.experience }}</td>
+                <td>{{ job.openings }}</td>
+
+                <td>
+                    {% if job.status == "Open" %}
+                        <span class="status-open">Open</span>
+                    {% else %}
+                        <span class="status-closed">Closed</span>
+                    {% endif %}
+                </td>
+
+                <td>{{ job.applicants }}</td>
+
+                <td>
+                    {% if job.selected > 0 %}
+                        <span class="status-open">{{ job.selected }}</span>
+                    {% else %}
+                        <span style="color:gray;">0</span>
+                    {% endif %}
+                </td>
+
+                <td>
+                    {{ job.openings - job.selected }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7" style="text-align:center;color:gray;">
+                    No jobs found for this admin
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- ================= SUMMARY ================= -->
+    <h3 style="margin-top:35px;">📊 Job Summary</h3>
+
+    <div class="analytics-grid">
+
+        <div class="stat-card gradient-blue">
+            <h4>Total Jobs</h4>
+            <h2>{{ jobs | length }}</h2>
+        </div>
+
+        <div class="stat-card gradient-green">
+            <h4>Total Applicants</h4>
+            <h2>{{ jobs | sum(attribute='applicants') }}</h2>
+        </div>
+
+        <div class="stat-card gradient-purple">
+            <h4>Total Selected</h4>
+            <h2>{{ jobs | sum(attribute='selected') }}</h2>
+        </div>
+
+        <div class="stat-card gradient-teal">
+            <h4>Remaining Openings</h4>
+            <h2>
+                {{
+                  jobs | sum(attribute='openings')
+                  - jobs | sum(attribute='selected')
+                }}
+            </h2>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

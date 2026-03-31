@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment Result | Career Portal</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f8f9fa; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .result-card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; max-width: 500px; width: 90%; border-top: 8px solid #dc3545; }
+        .icon-fail { font-size: 50px; color: #dc3545; margin-bottom: 15px; }
+        .score-box { background: #fff5f5; border: 1px solid #feb2b2; padding: 15px; border-radius: 10px; margin: 20px 0; }
+        .btn-retry { display: inline-block; padding: 12px 25px; background: #6c757d; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="result-card">
+    <div class="icon-fail">⚠️</div>
+    <h2>Assessment Incomplete</h2>
+    <p style="color: #666;">Thank you for your effort. Unfortunately, your coding score did not meet our minimum requirement for this role.</p>
+
+    <div class="score-box">
+        <p><strong>MCQ Score:</strong> {{ mcq }}% (Passed)</p>
+        <p><strong>Coding Score:</strong> <span style="color: #dc3545;">{{ code_score }}%</span></p>
+        <small style="color: #888;">Required Coding Score: 70%</small>
+    </div>
+
+    <p style="font-size: 0.9rem; color: #555;">Don't be discouraged! You can strengthen your coding fundamentals and apply for future openings after 3 months.</p>
+    
+    <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+    <a href="user.html" class="btn-retry">Back to Dashboard</a>
+</div>
+
+</body>
+</html>

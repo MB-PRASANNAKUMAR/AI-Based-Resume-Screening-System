@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Head Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="admin">
+<div style="display: flex; justify-content: space-between; align-items: center; background: #0f172a; padding: 15px 5%; color: white; border-bottom: 2px solid #2dd4bf;">
+    <div>
+        <h2 style="margin: 0; color: #2dd4bf;">HireStream <span style="font-weight: 300; color: white;">HQ</span></h2>
+        <small style="color: #94a3b8; letter-spacing: 1px;">SYSTEM STATUS: <b style="color: #2dd4bf;">SECURE (SUPERUSER)</b></small>
+    </div>
+    <div style="display: flex; align-items: center; gap: 20px;">
+        <div style="text-align: right;">
+            <p style="margin: 0; font-weight: bold;">Head Admin</p>
+            <a href="/logout" style="color: #f87171; font-size: 12px; text-decoration: none; border: 1px solid #f87171; padding: 2px 8px; border-radius: 4px; margin-top: 5px; display: inline-block;">Terminate Session</a>
+        </div>
+        <div style="width: 45px; height: 45px; background: #2dd4bf; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #0f172a; font-weight: 900; border: 2px solid #ffffff33;">
+            HQ
+        </div>
+    </div>
+</div>
+<div class="container dashboard">
+
+    <!-- ================= NAVBAR ================= -->
+    <div class="navbar" style="padding: 50px; border-radius:25px;">
+        <h2 class="nav-title" style="font-size: 30px;margin-right: 175px;">👑 Head Admin Dashboard</h2>
+        <div class="nav-right">
+            <a href="/head/export" class="btn btn-success">📤 Export CSV</a>
+            <a href="/logout" class="btn btn-danger">Logout</a>
+        </div>
+    </div>
+
+    <!-- ================= ADMINS OVERVIEW ================= -->
+    <h3 style="margin-top:20px;">👨‍💼 Admin Overview</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Admin Name</th>
+                <th>Email</th>
+                <th>Total Jobs</th>
+                <th>Total Applicants</th>
+                <th>Selected</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for row in stats %}
+            <tr>
+                <td><strong>{{ row.name }}</strong></td>
+                <td>{{ row.email }}</td>
+                <td>{{ row.total_jobs }}</td>
+                <td>{{ row.applicants }}</td>
+
+                <td>
+                    {% if row.selected > 0 %}
+                        <span class="status-open">{{ row.selected }}</span>
+                    {% else %}
+                        <span style="color:gray;">0</span>
+                    {% endif %}
+                </td>
+
+                <td>
+                    {% if row.is_active %}
+                        <span class="status-open">Active</span>
+                    {% else %}
+                        <span class="status-closed">Disabled</span>
+                    {% endif %}
+                </td>
+
+                <td>
+                    <a href="/head/admin/{{ row.id }}" class="btn">🔍 View</a>
+
+                    <a href="/head/toggle_admin/{{ row.id }}"
+                       class="btn {% if row.is_active %}btn-danger{% else %}btn-success{% endif %}">
+                        {% if row.is_active %}Disable{% else %}Enable{% endif %}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- ================= SUMMARY CARDS ================= -->
+    <h3 style="margin-top:35px;">📊 Platform Summary</h3>
+
+    <div class="analytics-grid">
+
+        <div class="stat-card gradient-blue">
+            <h4>Total Admins</h4>
+            <h2>{{ stats | length }}</h2>
+            <p>Active recruiters</p>
+        </div>
+
+        <div class="stat-card gradient-green">
+            <h4>Total Jobs</h4>
+            <h2>{{ stats | sum(attribute='total_jobs') }}</h2>
+            <p>Across all admins</p>
+        </div>
+
+        <div class="stat-card gradient-purple">
+            <h4>Total Applicants</h4>
+            <h2>{{ stats | sum(attribute='applicants') }}</h2>
+            <p>All job applications</p>
+        </div>
+
+        <div class="stat-card gradient-teal">
+            <h4>Total Selected</h4>
+            <h2>{{ stats | sum(attribute='selected') }}</h2>
+            <p>Qualified candidates</p>
+        </div>
+
+    </div>
+
+    <!-- ================= CHART ================= -->
+    <h3 style="margin-top:35px;">📈 Admin Performance</h3>
+
+    <div class="chart-wrapper">
+        <canvas id="adminChart"></canvas>
+    </div>
+
+</div>
+
+<!-- ================= CHART SCRIPT ================= -->
+<script>
+new Chart(document.getElementById("adminChart"), {
+    type: "bar",
+    data: {
+        labels: {{ labels | safe }},
+        datasets: [{
+            label: "Applicants per Admin",
+            data: {{ applicants | safe }},
+            backgroundColor: "rgba(99,102,241,0.85)",
+            borderRadius: 12
+        }]
+    },
+    options: {
+        responsive: true,
+        animation: {
+            duration: 1200
+        }
+    }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resume Comparison</title>
+    <link rel="stylesheet" href="/static/style.css">
+
+    <style>
+        body {
+            background: #0f172a;
+            color: #e5e7eb;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 90%;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* SCORE BOX */
+        .score-box {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .score-box h1 {
+            font-size: 40px;
+            margin: 10px 0;
+        }
+
+        /* GRID */
+        .compare-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* CARD */
+        .card {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            color: #c7d2fe;
+        }
+
+        .card p {
+            margin: 6px 0;
+        }
+
+        /* BUTTON */
+        .btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 15px;
+            background: #4f46e5;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #4338ca;
+        }
+
+        /* WINNER */
+        .winner {
+            border: 2px solid #22c55e;
+            box-shadow: 0 0 15px rgba(34,197,94,0.5);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            background: #22c55e;
+            color: black;
+            font-size: 12px;
+            border-radius: 5px;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>🧠 Resume Comparison</h2>
+
+    <!-- 🔥 SIMILARITY SCORE -->
+    <div class="score-box">
+        <p>Similarity Score</p>
+        <h1>{{ score }}%</h1>
+        <small>Higher means both resumes are similar</small>
+    </div>
+
+    <!-- 🔥 SIDE BY SIDE -->
+    <div class="compare-grid">
+
+        <!-- RESUME 1 -->
+        <div class="card {% if winner == 1 %}winner{% endif %}">
+            <h3>📄 Resume 1 
+                {% if winner == 1 %}
+                    <span class="tag">Best Match</span>
+                {% endif %}
+            </h3>
+
+            <p><strong>Candidate:</strong> {{ r1_data.name }}</p>
+            <p><strong>JD Match:</strong> {{ r1_data.match }}%</p>
+            <p><strong>Skill Score:</strong> {{ r1_data.skill }}%</p>
+            <p><strong>MCQ Score:</strong> {{ r1_data.mcq }}%</p>
+            <p><strong>Format:</strong> {{ r1_data.format }}</p>
+
+            <a href="/view/{{ r1 }}" class="btn" target="_blank">View Resume</a>
+        </div>
+
+        <!-- RESUME 2 -->
+        <div class="card {% if winner == 2 %}winner{% endif %}">
+            <h3>📄 Resume 2 
+                {% if winner == 2 %}
+                    <span class="tag">Best Match</span>
+                {% endif %}
+            </h3>
+
+            <p><strong>Candidate:</strong> {{ r2_data.name }}</p>
+            <p><strong>JD Match:</strong> {{ r2_data.match }}%</p>
+            <p><strong>Skill Score:</strong> {{ r2_data.skill }}%</p>
+            <p><strong>MCQ Score:</strong> {{ r2_data.mcq }}%</p>
+            <p><strong>Format:</strong> {{ r2_data.format }}</p>
+
+            <a href="/view/{{ r2 }}" class="btn" target="_blank">View Resume</a>
+        </div>
+
+    </div>
+
+    <!-- BACK BUTTON -->
+    <div style="text-align:center;">
+        <a href="/admin/ranking" class="btn">⬅ Back to Ranking</a>
+    </div>
+
+</div>
+
+</body>
+</html>
