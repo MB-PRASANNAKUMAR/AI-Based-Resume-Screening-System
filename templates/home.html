@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HireStream AI | Future of Recruitment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #a855f7;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+
+        body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--light); overflow-x: hidden; }
+
+        /* Navbar with Glassmorphism */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 10%; background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .logo { font-size: 26px; font-weight: 900; background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; }
+        .nav-links a { text-decoration: none; color: #475569; margin: 0 15px; font-weight: 500; transition: 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+        .auth-btns .btn { padding: 10px 24px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: 0.3s; }
+        .btn-login { color: var(--primary); border: 2px solid var(--primary); margin-right: 10px; }
+        .btn-login:hover { background: var(--primary); color: white; }
+        .btn-signup { background: var(--primary); color: white; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4); }
+
+        /* Hero Section */
+        .hero { padding: 120px 10% 80px; text-align: center; background: radial-gradient(circle at top right, #eef2ff, #ffffff); }
+        .hero h1 { font-size: 56px; line-height: 1.1; color: var(--dark); margin-bottom: 20px; }
+        .hero span { color: var(--primary); }
+        .hero p { font-size: 20px; color: #64748b; max-width: 700px; margin: 0 auto 40px; }
+
+        /* Feature Section */
+        .features-grid { padding: 60px 10%; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .card {
+            background: white; padding: 40px; border-radius: 24px; border: 1px solid #f1f5f9;
+            transition: all 0.4s ease; position: relative; overflow: hidden;
+        }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); border-color: var(--primary); }
+        .icon-box { 
+            width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; 
+            justify-content: center; font-size: 24px; margin-bottom: 20px; 
+        }
+        .bg-1 { background: #e0e7ff; color: #4338ca; }
+        .bg-2 { background: #f3e8ff; color: #7e22ce; }
+        .bg-3 { background: #dcfce7; color: #15803d; }
+        .bg-4 { background: #ffedd5; color: #9a3412; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="/" class="logo">HireStream AI</a>
+    <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#about">Our AI</a>
+        <a href="#pricing">Pricing</a>
+    </div>
+    <div class="auth-btns">
+        <a href="/login" class="btn btn-login">Login</a>
+        <a href="/register" class="btn btn-signup">Get Started</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <h1>Stop Applying. <br><span>Start Getting Matched.</span></h1>
+    <p>The world's first automated recruitment platform that ranks candidates using AI resume screening and real-world coding assessments.</p>
+    <div style="display: flex; justify-content: center; gap: 20px;">
+        <a href="/login" class="btn btn-signup" style="padding: 18px 45px; font-size: 18px;">Upload Resume Now</a>
+        <a href="#features" class="btn btn-login" style="padding: 18px 45px; font-size: 18px; border-width: 1px;">How it Works</a>
+    </div>
+</section>
+
+<div class="features-grid" id="features">
+    <div class="card">
+        <div class="icon-box bg-1"><i class="fas fa-file-invoice"></i></div>
+        <h3>AI Resume Parsing</h3>
+        <p>Our neural networks extract skills and experience from your PDF in seconds with 99% accuracy.</p>
+    </div>
+    <div class="card">
+        <div class="icon-box bg-2"><i class="fas fa-brain"></i></div>
+        <h3>Technical MCQ</h3>
+        <p>Take a dynamic 30-question test tailored specifically to the job role you are applying for.</p>
+    </div>
+    <div class="card">
+        <div class="icon-box bg-3"><i class="fas fa-code"></i></div>
+        <h3>Coding Sandbox</h3>
+        <p>Write real code in our integrated IDE. Pass test cases to prove your technical expertise.</p>
+    </div>
+    <div class="card">
+        <div class="icon-box bg-4"><i class="fas fa-chart-line"></i></div>
+        <h3>Dynamic Ranking</h3>
+        <p>Get an instant percentile rank. Top candidates are highlighted directly to the HR managers.</p>
+    </div>
+</div>
+<footer style="padding: 40px 10% 20px; text-align: center; background: #f8fafc; color: #94a3b8; font-size: 14px;">
+    <p>&copy; 2026 HireStream AI. All rights reserved. 
+       <a href="/admin-secure-gate" style="color: inherit; text-decoration: none; cursor: default;">System</a>
+    </p>
+</footer>
+</body>
+</html>

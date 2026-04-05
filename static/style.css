@@ -1,0 +1,682 @@
+/* ================= RESET ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+/* ================= BODY ================= */
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+.center-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+textarea, input, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    margin-bottom: 14px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    font-size: 14px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+button {
+    width: 100%;
+    background: linear-gradient(135deg, #4f46e5, #3b82f6);
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* ================= CONTAINER ================= */
+.container {
+    width: 420px;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* Dashboard wider */
+.dashboard {
+    width: 95%;
+    max-width: 1000px;
+}
+
+/* ================= HEADINGS ================= */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #2d3748;
+}
+
+h3 {
+    margin-top: 20px;
+    color: #4a5568;
+}
+
+/* ================= FORM INPUTS ================= */
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 11px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #cbd5e0;
+    font-size: 14px;
+}
+
+textarea {
+    height: 90px;
+    resize: none;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+
+/* ================= BUTTONS ================= */
+button,
+.btn {
+    display: inline-block;
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: linear-gradient(135deg, #667eea, #5a67d8);
+    color: white;
+    font-size: 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+button:hover,
+.btn:hover {
+    opacity: 0.95;
+    transform: translateY(-1px);
+}
+
+/* ================= DANGER BUTTON ================= */
+.btn-danger {
+    background: linear-gradient(135deg, #e53e3e, #c53030);
+}
+
+.btn-danger:hover {
+    opacity: 0.95;
+}
+
+/* ================= LINKS ================= */
+a {
+    display: inline-block;
+    margin-top: 15px;
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ================= LOGOUT ================= */
+.logout {
+    color: #e53e3e;
+    font-weight: bold;
+}
+
+/* ================= RESULT ================= */
+.result {
+    text-align: center;
+}
+
+.result h3 {
+    margin-top: 18px;
+}
+
+/* ================= NAVBAR ================= */
+.navbar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    margin-bottom: 25px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 10pt;
+}
+
+/* Centered Title */
+.nav-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: white;
+    padding-right: 200px;
+    text-align: center;
+}
+
+/* Right side (Logout button) */
+.nav-right {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.nav-right a {
+    color: white;
+    font-weight: bold;
+}
+
+.navbar h2 {
+    margin: 0;
+    color: white;
+}
+
+.navbar a:not(.btn) {
+    color: white;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* ================= TABLE ================= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th {
+    background: #667eea;
+    color: white;
+    padding: 10px;
+}
+
+td {
+    padding: 10px;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background: #f7fafc;
+}
+
+/* ================= JOB LIST ================= */
+.job-list {
+    list-style: none;
+    margin-top: 15px;
+}
+
+.job-list li {
+    background: #edf2f7;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+}
+
+/* ================= STATUS LABELS ================= */
+.status-open {
+    color: green;
+    font-weight: bold;
+}
+
+.status-closed {
+    color: red;
+    font-weight: bold;
+}
+
+/* ================= DISABLED ================= */
+.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* ================= GLASS EFFECT ================= */
+.glass {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+/* ================= CARD HOVER ================= */
+.container,
+.dashboard {
+    margin: 40px auto; transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.container:hover,
+.dashboard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* ================= GRADIENT BORDER ================= */
+.gradient-border {
+    position: relative;
+}
+
+.gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #667eea, #764ba2, #38b2ac);
+    z-index: -1;
+}
+
+/* ================= BADGES ================= */
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+}
+
+.badge-open {
+    background: linear-gradient(135deg, #48bb78, #38a169);
+}
+
+.badge-closed {
+    background: linear-gradient(135deg, #e53e3e, #c53030);
+}
+
+.badge-selected {
+    background: linear-gradient(135deg, #4299e1, #3182ce);
+}
+
+.badge-rejected {
+    background: linear-gradient(135deg, #ed8936, #dd6b20);
+}
+
+/* ================= PROGRESS BAR ================= */
+.progress {
+    background: #e2e8f0;
+    border-radius: 10px;
+    height: 10px;
+    overflow: hidden;
+    margin-top: 6px;
+}
+
+.progress span {
+    display: block;
+    height: 100%;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    animation: grow 1s ease-in-out;
+}
+
+@keyframes grow {
+    from { width: 0; }
+}
+
+/* ================= BUTTON EFFECT ================= */
+.btn {
+    position: relative;
+    overflow: hidden;
+}
+
+
+.btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.2);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.btn:hover::after {
+    opacity: 1;
+}
+.btn-small {
+    width: auto;
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+/* ================= TABLE ROW HOVER ================= */
+tr:hover td {
+    background: rgba(102, 126, 234, 0.08);
+}
+
+/* ================= WIDGET PANELS ================= */
+.widget {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 16px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+
+.widget h4 {
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+.widget h2 {
+    margin-top: 5px;
+    font-size: 26px;
+}
+
+/* ================= FILE INPUT ================= */
+input[type="file"] {
+    border: 2px dashed #667eea;
+    padding: 12px;
+    background: #f7fafc;
+    cursor: pointer;
+}
+/* ================= ADMIN DARK MODE ================= */
+.admin body,
+body.admin {
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: #e5e7eb;
+}
+
+/* Containers */
+.admin .container,
+.admin .dashboard {
+    background: #111827;
+    color: #e5e7eb;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+    max-width: 1200px;
+    padding: 30px;
+}
+
+/* Tables */
+.admin table {
+    background: #020617;
+}
+
+.admin th {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+}
+
+.admin td {
+    border-bottom: 1px solid #1e293b;
+}
+
+.admin tr:nth-child(even) {
+    background: #020617;
+}
+
+.admin tr:hover td {
+    background: rgba(99, 102, 241, 0.12);
+}
+
+/* Inputs */
+.admin input,
+.admin select,
+.admin textarea {
+    background: #020617;
+    border-color: #1e293b;
+    color: #e5e7eb;
+}
+
+/* Navbar */
+.admin .navbar {
+    background: linear-gradient(135deg, #1e3a8a, #312e81);
+}
+
+input[type="file"]:hover {
+    background: #edf2f7;
+}
+
+/* ================= ANIMATION ================= */
+.fade-in {
+    animation: fade 0.6s ease-in-out;
+}
+
+@keyframes fade {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ================= SCORE METER ================= */
+.score-wrapper {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 25px;
+}
+
+.score {
+    --percent: 0;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background:
+        conic-gradient(
+            #667eea calc(var(--percent) * 1%),
+            #e2e8f0 0
+        );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #2d3748;
+    animation: fill 1.5s ease-out;
+}
+
+.score span {
+    background: white;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes fill {
+    from { --percent: 0; }
+}
+
+/* ================= DARK MODE ================= */
+body.dark {
+    background: linear-gradient(135deg, #3562ca, #001881);
+    color: #e5e7eb;
+}
+
+body.dark .container {
+    background: #0824a0;
+    color: #e5e7eb;
+}
+
+body.dark input,
+body.dark textarea,
+body.dark select {
+    background: #1b339b;
+    color: #e5e7eb;
+    border: 1px solid #334155;
+}
+
+body.dark table {
+    background: #020617;
+}
+
+body.dark th {
+    background: #1e293b;
+}
+
+body.dark tr:nth-child(even) {
+    background: #020617;
+}
+
+body.dark td {
+    color: #e5e7eb;
+}
+
+body.dark .navbar {
+    background: linear-gradient(135deg, #020617, #0f172a);
+}
+
+body.dark .btn {
+    background: linear-gradient(135deg, #4f46e5, #4338ca);
+}
+
+body.dark .btn-danger {
+    background: linear-gradient(135deg, #dc2626, #991b1b);
+}
+
+body.dark a {
+    color: #a5b4fc;
+}
+
+
+.messages {
+    margin: 15px 0;
+}
+
+.msg {
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.msg.error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.msg.success {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.msg.info {
+    background: #e0f2fe;
+    color: #075985;
+}
+
+/* ================= ANALYTICS GRID ================= */
+.analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.stat-card {
+    padding: 20px;
+    border-radius: 16px;
+    color: white;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.35);
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-6px);
+}
+
+.stat-card h4 {
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+.stat-card h2 {
+    font-size: 32px;
+    margin: 8px 0;
+}
+
+.stat-card p {
+    font-size: 13px;
+    opacity: 0.8;
+}
+
+/* ================= GRADIENTS ================= */
+.gradient-blue { background: linear-gradient(135deg, #3b82f6, #1e40af); }
+.gradient-green { background: linear-gradient(135deg, #22c55e, #15803d); }
+.gradient-red { background: linear-gradient(135deg, #ef4444, #991b1b); }
+.gradient-purple { background: linear-gradient(135deg, #8b5cf6, #5b21b6); }
+.gradient-indigo { background: linear-gradient(135deg, #6366f1, #312e81); }
+.gradient-teal { background: linear-gradient(135deg, #14b8a6, #0f766e); }
+
+/* ================= CHART WRAPPER ================= */
+.chart-wrapper {
+    margin-top: 30px;
+    padding: 20px;
+    background: #020617;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+}
+
+.upload-limit-info {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #6366f1; /* indigo */
+    font-weight: 500;
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+.loader-box {
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+    color: #555;
+}
+
+/* Optional: Add a simple pulse effect */
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+.loader-box p {
+    animation: pulse 1.5s infinite;
+}
+

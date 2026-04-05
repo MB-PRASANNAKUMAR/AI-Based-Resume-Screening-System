@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assessment Instructions</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            background: #f4f7f6; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+        }
+
+        .inst-container { 
+            max-width: 600px; 
+            background: white; 
+            padding: 40px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
+        }
+
+        .step { 
+            margin-bottom: 20px; 
+            padding: 15px; 
+            border-left: 4px solid #007bff; 
+            background: #f8f9fa; 
+        }
+
+        .warning { 
+            color: #dc3545; 
+            font-weight: bold; 
+            font-size: 0.9rem; 
+        }
+
+        ul.clean-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul.clean-list li::before {
+            content: "✅";
+            margin-right: 10px;
+        }
+
+.btn-start { 
+    display: block; 
+    width: calc(100% - 20px); /* 👈 equal spacing left & right */
+    margin: 30px 10px 0 10px; /* 👈 balanced spacing */
+    height: 50px;
+    line-height: 50px;
+    background: #28a745; 
+    color: white; 
+    text-align: center; 
+    border-radius: 6px; 
+    font-weight: bold; 
+    text-decoration: none;
+}
+    </style>
+</head>
+<body>
+
+<div class="inst-container">
+    <h2 style="color: #333;">MCQ Assessment Instructions</h2>
+    <p>Please read the following guidelines carefully before starting.</p>
+    
+    <div class="step">
+        <strong>Technical MCQ Test</strong>
+        <ul class="clean-list">
+            <li>Ensure a stable internet connection.</li>
+            <li>You will have <b>5 minutes</b> to complete the test.</li>
+            <li>You must score at least <b>80%</b> to pass.</li>
+            <li>Each question has only one correct answer.</li>
+            <li>All questions are mandatory.</li>
+            <li>Copy-paste and right-click are disabled.</li>
+        </ul>
+    </div>
+
+    <p class="warning">
+        ⚠️ DO NOT refresh the page or click 'Back' once the assessment starts, or your progress may be lost.
+    </p>
+
+    <a href="/assessment/{{ job_id }}" class="btn-start">
+        I am Ready, Start MCQ Test
+    </a>
+</div>
+
+</body>
+</html>

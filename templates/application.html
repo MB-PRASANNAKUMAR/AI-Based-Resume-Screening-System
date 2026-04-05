@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Apply for {{ job.title }} | HireStream AI</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+<div class="center-right">
+<div class="container dashboard">
+
+    <div class="navbar">
+        <h2 class="nav-title">Application: {{ job.title }}</h2>
+        <div class="nav-right">
+            <a href="/user" class="btn btn-secondary" style="display:flex;">Back to Dashboard</a>
+            <a href="/logout" class="btn btn-danger">Logout</a>
+        </div>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert {{ 'alert-danger' if category == 'error' else 'alert-success' }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="post" action="/user" enctype="multipart/form-data">
+        
+        <input type="hidden" name="job" value="{{ job.id }}">
+
+        <div class="job-info-banner" style="background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 5px solid #6366f1; margin-bottom: 25px;">
+            <h3 style="margin-top:0;">Position: {{ job.title }}</h3>
+            <p><strong>Required Skills:</strong> {{ job.skills }}</p>
+            <p><strong>Required Experience:</strong> {{ job.experience }} years</p>
+            <p><strong>Description:</strong> {{ job.description }}</p>
+        </div>
+
+        <h3><u>Applicant Details</u></h3>
+        <br>
+        <label>Full Name</label>
+        <input type="text" name="applicant_name" placeholder="Enter your full name" required>
+
+        <label>Email</label>
+        <input type="email" name="applicant_email" placeholder="Enter your email" required>
+
+        <label>Phone Number</label>
+        <input type="tel" name="phone" placeholder="Enter your phone number" required>
+
+        <label>Total Years of Experience</label>
+        <input type="number" name="experience" min="0" step="0.5" placeholder="e.g. 2.5" required>
+
+        <h3>Additional Information</h3>
+
+        <label>Your Skills</label>
+        <textarea name="user_skills" placeholder="e.g. Python, Flask, SQL, Machine Learning" required></textarea>
+
+        <label>Expected Salary</label>
+        <input type="text" name="expected_salary" placeholder="e.g. 8 LPA">
+
+        <h3>Resume Upload</h3>
+        <p style="font-size: 0.85rem; color: #64748b;">Please upload your resume in PDF format.</p>
+        <input type="file" name="resume" accept=".pdf" required>
+
+        <button type="submit" class="btn-primary" style="margin-top: 20px; width: 100%; padding: 15px; font-weight: bold;">Submit Application & Analyze</button>
+    </form>
+</div>
+</div>
+
+<script>
+    // Auto-hide flash messages
+    document.addEventListener("DOMContentLoaded", function() {
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                alert.style.transition = "opacity 0.5s ease";
+                alert.style.opacity = "0";
+                setTimeout(() => alert.remove(), 500);
+            }, 3000);
+        });
+    });
+</script>
+
+</body>
+</html>
