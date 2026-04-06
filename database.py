@@ -17,12 +17,12 @@ def init_db():
     )
     """)
     cur.execute("""
-        INSERT INTO admins (name, email, password, role,is_active)
+        INSERT  OR IGNORE INTO admins (name, email, password, role,is_active)
         VALUES
         (
             'Main Head', 
             'head@hirestream.ai', 
-            '6c3f0b07d9d1b6a15ff1f8d3f47e8e4a3e63e21e1f2a82f7e0b1eafc1448b2f2',
+            '7fb69d64d085e299af365f6783a4f0e3c77b6fd4bf14febdb3af8ba0416f777d',
             'head',
             1
         )""")     

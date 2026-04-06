@@ -16,7 +16,13 @@ import csv
 from io import StringIO
 from werkzeug.utils import secure_filename
 from database import init_db
+
 DB_NAME = "/tmp/resume_screening.db"
+if not os.path.exists(DB_NAME):
+    print("📁 Database not found. Creating new database...")
+    init_db()
+else:
+    print("✅ Database already exists. Skipping initialization.")
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "dev-secret")
