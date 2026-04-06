@@ -24,6 +24,13 @@ app.secret_key = os.environ.get("SECRET_KEY", "dev-secret")
 RESUME_FOLDER = "/tmp/uploads"
 os.makedirs(RESUME_FOLDER, exist_ok=True)
 
+# Check if database exists
+if not os.path.exists(DB_NAME):
+    print("Database not found. Initializing...")
+    init_db(DB_NAME)
+else:
+    print("Database already exists. Skipping initialization.")
+    
 # ---------- DATABASE ----------
 def db():
     con = sqlite3.connect(DB_NAME)
