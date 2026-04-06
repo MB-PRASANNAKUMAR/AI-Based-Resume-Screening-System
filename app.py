@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, request, redirect, session, send_file,flash,make_response,Response, url_for, Response
+from flask import Flask, render_template, request, redirect, session, send_file,flash,make_response,Response, url_for, Response
 import sqlite3
 import re
 import pandas as pd
@@ -15,6 +15,9 @@ import hashlib
 import csv
 from io import StringIO
 from werkzeug.utils import secure_filename
+from database import init_db
+DB_NAME = "/tmp/resume_screening.db"
+
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "dev-secret")
 # ---------- FOLDERS ----------
@@ -23,7 +26,7 @@ os.makedirs(RESUME_FOLDER, exist_ok=True)
 
 # ---------- DATABASE ----------
 def db():
-    con = sqlite3.connect("/tmp/resume_screening.db")
+    con = sqlite3.connect(DB_NAME)
     con.row_factory = sqlite3.Row
     return con
 
@@ -492,90 +495,7 @@ def bulk_upload(job_id):
     con.close()
     flash("Assessment uploaded successfully!", "success")
     return redirect(url_for('admin'))
-'''
-@app.route('/submit_final/<int:job_id>', methods=['POST'])
-def submit_final(job_id):
-    # 1. Retrieve data from the hidden inputs and session
-    mcq_score = request.form.get('mcq_score')
-    user_code = request.form.get('user_code')
-    user_id = session.get('user_id') 
 
-    if not user_id:
-        return "User session expired. Please log in again.", 401
-
-    con = sqlite3.connect("/tmp/resume_screening.db")
-    con.row_factory = sqlite3.Row
-    cur = con.cursor()
-    
-    challenge = cur.execute("""
-        SELECT function_name, private_test_cases 
-        FROM coding_challenges 
-        WHERE job_id = ?
-    """, (job_id,)).fetchone()
-
-    if not challenge:
-        con.close()
-        return "Coding challenge not found for this job.", 404
-
-    # 3. Secure Execution against Private Test Cases
-    # run_test_cases returns: (bool_all_passed, list_of_individual_results)
-    all_passed, private_results = run_test_cases(
-        user_code, 
-        challenge['function_name'], 
-        challenge['private_test_cases']
-    )
-
-    # 4. Calculate Coding Score based on % of private tests passed
-    total_tests = len(private_results)
-    passed_tests = sum(1 for r in private_results if r.get('passed') == True)
-    
-    # Avoid division by zero if no test cases are defined
-    code_score = (passed_tests / total_tests * 100) if total_tests > 0 else 0
-
-    # 5. Save everything to the database
-    try:
-        cur.execute("""
-            INSERT INTO resume_history (
-                user_id, job_id, quiz_score, match_score, resume_path, replaced_at
-            ) VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
-        """, (user_id, job_id, mcq_score, code_score, "assessment_submission.txt"))
-        
-        cur.execute("""
-            UPDATE applications 
-            SET status = 'Assessment Completed' 
-            WHERE user_id = ? AND job_id = ?
-        """, (user_id, job_id))
-        
-        con.commit()
-    except Exception as e:
-
-        con.rollback()
-    finally:
-        con.close()
-    mcq_score = float(request.form.get('mcq_score', 0))
-    # Let's assume the passing mark for coding is 70%
-    coding_pass_mark = 70.0
-    con = db()
-    con.execute("""
-        UPDATE applications 
-        SET coding_completed = 1 
-        WHERE user_id = ? AND job_id = ?
-    """, (session['user_id'], job_id))
-    # 6. Final Redirection
-    # We send the code_score and the results of the private run
-    if code_score >= coding_pass_mark:
-        # Success Scenario
-        return render_template('thank_you.html', 
-                               mcq=mcq_score, 
-                               code_score=code_score,
-                               passed=True)
-    else:
-        # Failure Scenario
-        return render_template('assessment_failed.html', 
-                               mcq=mcq_score, 
-                               code_score=code_score,
-                               passed=False)
-'''
 @app.route('/submit_assessment/<int:job_id>', methods=['POST'])
 def submit_assessment(job_id):
     user_id = session.get("user_id")
@@ -589,10 +509,10 @@ def submit_assessment(job_id):
     
     # 2. Compare user input to DB answers
     for q in questions:
-        user_ans = request.form.get(f"mcq_{q['id']}") # Matches name="mcq_{{q.id}}" in HTML
+        user_ans = request.form.get(f"mcq_{q['id']}") 
         if user_ans == q['correct_answer']:
             score += 1
-
+    PASS_MARK = 80
     # Calculate percentage
     final_percentage = (score / total * 100) if total > 0 else 0
 
@@ -605,11 +525,35 @@ def submit_assessment(job_id):
 
     session['temp_quiz_score'] = final_percentage
     session['temp_job_id'] = job_id
+    con.execute("""
+        UPDATE resumes 
+        SET mcq_completed = 1,
+            mcq_score = ?,
+            result = CASE 
+                WHEN ? >= ? THEN 'Selected'
+                ELSE 'Rejected'
+            END
+        WHERE user_id = ? AND job_id = ?
+    """, (final_percentage, final_percentage, PASS_MARK, user_id, job_id))
+
     con.commit()
     con.close()
 
-    return render_template('thank_you.html', score=final_percentage, job_title="Software Engineer")
-
+    if final_percentage >= PASS_MARK:
+        return render_template(
+            'thank_you.html',
+            score=final_percentage,
+            job_id=job_id,
+            passed=True
+        )
+    else:
+        return render_template(
+            'assessment_failed.html',
+            score=final_percentage,
+            job_id=job_id,
+            passed=False
+        )
+    
 @app.route("/job_uploads_left/<int:job_id>")
 def job_uploads_left(job_id):
     # Standardize: check both common session keys
@@ -951,7 +895,7 @@ def user():
             skill = skill_score(resume_text, job["skills"])
             f_status, f_sections, _ = format_check(resume_text)
             # 🔥 AI SCREENING FILTER
-            if jd_score < 0 or skill < 0 or f_status.lower() == "professional":
+            if jd_score < 80 or skill < 80 or f_status.lower() != "professional":
                 
                 return render_template(
                     "result.html",

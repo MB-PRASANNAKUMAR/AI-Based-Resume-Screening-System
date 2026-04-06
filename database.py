@@ -1,5 +1,4 @@
 import sqlite3
-
 DB_NAME = "/tmp/resume_screening.db"
 def init_db():
     con = sqlite3.connect(DB_NAME)
@@ -23,7 +22,7 @@ def init_db():
         (
             'Main Head', 
             'head@hirestream.ai', 
-            'scrypt:32768:8:1$de5laizyYc5ov2tQ$40aa4e3b73817270d871582c56dd670316a52ca8b75250588646a1edf58629617a02f0fb78af29b7a522ececdfe6715cf040bcc220d3eaeaf36a5d405dbb1671',
+            '6c3f0b07d9d1b6a15ff1f8d3f47e8e4a3e63e21e1f2a82f7e0b1eafc1448b2f2',
             'head',
             1
         )""")     
@@ -122,7 +121,7 @@ def init_db():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             job_id INTEGER,
             question TEXT NOT NULL,
-            options TEXT, -- JSON format: {"A": "...", "B": "..."}
+            options TEXT, 
             correct_answer TEXT,
             FOREIGN KEY (job_id) REFERENCES jobs (id)
         )
