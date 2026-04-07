@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, send_file,flash,make_response,Response, url_for, Response
+from flask import Flask, render_template, request, redirect, session, send_file, flash, make_response, url_for, Response
 import sqlite3
 import re
 import pandas as pd
@@ -64,21 +64,24 @@ def normalize_text(text):
     return text
 
 # ---------- JD MATCH ----------
-def jd_match(resume, jd):
-    resume = normalize_text(resume)
-    jd = normalize_text(jd)
+def jd_match(resume, jd, skills):
+    resume = resume.lower()
+    jd = jd.lower()
+    skills_list = [s.strip().lower() for s in skills.split(",")]
 
-    if not resume or not jd:
-        return 0.0
+    matched = sum(1 for skill in skills_list if skill in resume)
+    skill_overlap_score = (matched / len(skills_list)) * 100 if skills_list else 0
 
-    vectorizer = TfidfVectorizer(stop_words="english", ngram_range=(1, 2))
-    
     try:
+        vectorizer = TfidfVectorizer(stop_words="english")
         vectors = vectorizer.fit_transform([resume, jd])
-        score = cosine_similarity(vectors)[0][1] * 100
-        return round(min(score, 100.0), 2)
-    except Exception as e:
-        return 0.0
+        tfidf_score = cosine_similarity(vectors)[0][1] * 100
+    except:
+        tfidf_score = 0
+
+    final_score = (0.7 * skill_overlap_score) + (0.3 * tfidf_score)
+
+    return round(min(final_score, 100.0), 2)
 
 def extract_skills(resume_text, skills_list):
     resume_text = normalize_text(resume_text)
@@ -123,7 +126,8 @@ def skill_score(resume, skills_str):
     score = (matched_count / len(required_skills)) * 100   
     return round(score, 2)
 
-SAMPLES_FOLDER = "uploads/samples"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+SAMPLES_FOLDER = os.path.join(BASE_DIR, "uploads", "samples")
 
 def load_sample_resumes():
     texts = []
@@ -186,12 +190,12 @@ def analyze_resume(resume_text, jd_text, skills_required):
     resume_text = normalize_text(resume_text)
     jd_text = normalize_text(jd_text)
 
-    jd = jd_match(resume_text, jd_text)
+    jd = jd_match(resume_text, jd_text,skills_required)
     skill = skill_score(resume_text, skills_required)
     format_status, sections, format_sim = format_check(resume_text)
 
     # 🎯 FINAL AI SCORE (weighted)
-    final = (0.5 * jd) + (0.3 * skill) + (0.2 * format_sim)
+    final_score = (0.6 * jd) + (0.3 * skill) + (0.1 * format_sim)
 
     return {
         "jd_score": jd,
@@ -199,7 +203,7 @@ def analyze_resume(resume_text, jd_text, skills_required):
         "format_score": format_sim,
         "format_status": format_status,
         "sections": sections,
-        "final_score": round(final, 2)
+        "final_score": round(final_score, 2)
     }
 
 # --Main Program-- #
@@ -890,19 +894,21 @@ def user():
             safe_user_name = secure_filename(u_name)
             filename = f"{safe_user_name}_{u_id}_{job_id}_{int(time.time())}.pdf"
             path = os.path.join(RESUME_FOLDER, filename)
-            file_path = os.path.join(RESUME_FOLDER, filename)
-            file.save(file_path)
-
+            file.save(path)
+            resume_path = path
+            
             # Analyze Resume
             resume_text = normalize_text(extract_text(path))
             resume_hash = get_resume_hash(resume_text)
             
             job = cur.execute("SELECT * FROM jobs WHERE id=?", (job_id,)).fetchone()
-            jd_score = jd_match(resume_text, normalize_text(job["description"]))
+            jd_text = job["description"] + " " + job["skills"]
+            jd_score = jd_match(resume_text, jd_text, job["skills"])
             skill = skill_score(resume_text, job["skills"])
-            f_status, f_sections, _ = format_check(resume_text)
+            f_status, f_sections, format_sim = format_check(resume_text)
             # 🔥 AI SCREENING FILTER
-            if jd_score < 80 or skill < 80 or f_status.lower() != "professional":
+            final_score = (0.6 * jd_score) + (0.3 * skill) + (0.1 * format_sim)
+            if jd_score < 70 or skill < 70 or f_status.lower() != "professional":
                 
                 return render_template(
                     "result.html",
@@ -916,11 +922,11 @@ def user():
             # Initial Insert
             cur.execute("""
                 INSERT INTO resumes 
-                (user_id, job_id, match_score, skill_score, format_status, 
+                (user_id, job_id, match_score, skill_score, final_score, format_status, 
                 format_sections, result, resume_path, resume_hash, 
                 mcq_completed)
-                VALUES (?,?,?,?,?,?,?,?,?,0)
-            """, (u_id, job_id, jd_score, skill, f_status, 
+                VALUES (?,?,?,?,?,?,?,?,?,?,0)
+            """, (u_id, job_id, jd_score, skill, final_score, f_status, 
                   json.dumps(f_sections), "Selected",path, resume_hash))
 
             con.commit()
@@ -1082,15 +1088,17 @@ def download_report():
     # SQL query to join user names, job titles, and their scores
     query = """
     SELECT 
-        u.name AS Candidate_Name, 
-        j.title AS Job_Role, 
-        rh.quiz_score AS MCQ_Score_Percent,
-        rh.time_taken AS Time_Taken_Seconds,
-        rh.replaced_at AS Date_Submitted
-    FROM resume_history rh
-    JOIN users u ON rh.user_id = u.id
-    JOIN jobs j ON rh.job_id = j.id
-    """    
+        u.name AS Candidate_Name,
+        u.email AS Email,
+        j.title AS Job_Role,
+        r.match_score AS JD_Score,
+        r.skill_score AS Skill_Score,
+        r.final_score AS Final_Score
+    FROM resumes r
+    JOIN users u ON r.user_id = u.id
+    JOIN jobs j ON r.job_id = j.id
+    ORDER BY r.final_score DESC
+    """
     # Load data into Pandas
     df = pd.read_sql_query(query, con)
     con.close()
