@@ -1,5 +1,5 @@
 import sqlite3
-
+import os
 DB_NAME = "/tmp/resume_screening.db"
 def init_db():
     con = sqlite3.connect(DB_NAME)
@@ -18,14 +18,17 @@ def init_db():
     )
     """)
 
+    head_password = os.getenv("HEAD_ADMIN_PASSWORD")
     cur.execute("""
     INSERT OR IGNORE INTO admins (name, email, password, role, is_active)
-    VALUES ('Main Head', 
-            'head@hirestream.ai', 
-            '01ad9f0b2d2794dcab68f0a47ba33b119ebc2231ff9fedab36c0accd20213553',
-            'head',
-            1)
-    """)
+    VALUES (?, ?, ?, ?, ?)
+    """, (
+        "Main Head",
+        "head@hirestream.ai",
+        head_password,
+        "head",
+        1
+    ))
 
     #2. Users
     cur.execute("""
