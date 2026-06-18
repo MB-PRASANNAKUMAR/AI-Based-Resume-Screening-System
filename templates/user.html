@@ -84,20 +84,20 @@
             overflow: hidden;
         }
         .circle {
-    position: relative;
-    width: 150px;
-    height: 150px;
-    margin: 20px auto;
-}
-
-#scoreTextCircle {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 1.5rem;
-    font-weight: bold;
-}
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 20px auto;
+        }
+        
+        #scoreTextCircle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
         .job-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05); }
 
         /* Status Border Accent */
@@ -129,72 +129,72 @@
         .badge-completed { background: #dcfce7; color: #166534; }
 
         /* Base button */
-.btn-action {
-    width: calc(100 - 50px);   /* 👈 keeps equal spacing left & right */
-    margin: 10px; 
-    padding: 12px;
-    padding-left: 12px;
-    border-radius: 10px;
-    text-decoration: none;
-    text-align: center;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: all 0.25s ease;
-    margin-top: auto;
-    border: none;
-    cursor: pointer;
-}
-
-/* Apply */
-.btn-new {
-    background: linear-gradient(135deg, #6366f1, #4f46e5);
-    color: white;
-}
-
-.btn-new:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 15px rgba(99, 102, 241, 0.3);
-}
-
-/* Pending */
-.btn-pending {
-    background: linear-gradient(135deg, #f59e0b, #d97706);
-    color: white;
-}
-
-.btn-pending:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 15px rgba(245, 158, 11, 0.3);
-}
-
-/* Completed (disabled look) */
-.btn-completed {
-    background: #e2e8f0;
-    color: #64748b;
-    cursor: default;
-}
-
-/* Score button */
-.btn-score {
-    margin-top: 10px;
-    background: transparent;
-    color: var(--accent);
-    border: 1.5px solid var(--accent);
-}
-
-.btn-score:hover {
-    background: var(--accent);
-    color: white;
-    transform: translateY(-1px);
-}
+        .btn-action {
+            width: calc(100 - 50px);  
+            margin: 10px; 
+            padding: 12px;
+            padding-left: 12px;
+            border-radius: 10px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.25s ease;
+            margin-top: auto;
+            border: none;
+            cursor: pointer;
+        }
+        
+        /* Apply */
+        .btn-new {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+        }
+        
+        .btn-new:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(99, 102, 241, 0.3);
+        }
+        
+        /* Pending */
+        .btn-pending {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+        }
+        
+        .btn-pending:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(245, 158, 11, 0.3);
+        }
+        
+        /* Completed (disabled look) */
+        .btn-completed {
+            background: #e2e8f0;
+            color: #64748b;
+            cursor: default;
+        }
+        
+        /* Score button */
+        .btn-score {
+            margin-top: 10px;
+            background: transparent;
+            color: var(--accent);
+            border: 1.5px solid var(--accent);
+        }
+        
+        .btn-score:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-1px);
+        }
         .flash-message {
-    transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-.flash-hide {
-    opacity: 0;
-    transform: translateY(-10px);
-}
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .flash-hide {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
         .btn-new { background: var(--accent); color: white; }
         .btn-pending { background: var(--warning); color: white; }
         .btn-completed { background: #f1f5f9; color: #94a3b8; cursor: default; }
