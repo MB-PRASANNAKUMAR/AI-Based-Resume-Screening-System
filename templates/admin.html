@@ -9,7 +9,7 @@
     
 <style>
     .btn-download {
-        background-color: #107c41; /* Excel Green */
+        background-color: #107c41;
         color: white;
         padding: 10px 20px;
         text-decoration: none;
@@ -22,7 +22,6 @@
         box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
     
-    /* Make the table responsive for HR on the go */
     .table-container {
         overflow-x: auto;
     }
@@ -50,7 +49,6 @@
 
 <div class="container dashboard">
 
-    <!-- ================= NAVBAR ================= -->
     <div class="navbar">
         <h2 class="nav-title">🛡 Admin Dashboard</h2>
         <div class="nav-right">
@@ -64,7 +62,6 @@
         </div>
 
     </div>
-    <!-- ================= ADD JOB FORM ================= -->
     <form method="post" enctype="multipart/form-data">
         <input type="text" name="title" placeholder="Job Title" required>
         <textarea name="desc" placeholder="Job Description" required></textarea>
@@ -98,12 +95,10 @@
         
     </form>
     <h3 style="margin-top:40px;">📂 View all the candidates details</h3>
-    <!-- ================= RANKING BUTTON ================= -->
     <a href="/admin/ranking" class="btn" style="margin:15px 0;">
         📊 View Resume Rankings
     </a>
     <h3 style="margin-top:40px;">📂 Assessment Management</h3>
-    <!-- ================= JOB LIST ================= -->
     <h3>Available Jobs</h3>
 
     <table>
@@ -130,7 +125,6 @@
             <td>{{ job["selected_count"] }}</td>
             <td>{{ job["remaining"] }}</td>
 
-            <!-- STATUS -->
             <td>
                 {% if job["status"] == "Open" %}
                     <span class="status-open">Open</span>
@@ -139,10 +133,7 @@
                 {% endif %}
             </td>
 
-            <!-- ACTIONS -->
             <td>
-
-                <!-- OPEN / CLOSE BUTTON -->
                 {% if job["remaining"] == 0 %}
                     <button class="btn btn-secondary" disabled>
                         🚫 Closed (Filled)
@@ -158,11 +149,9 @@
                     </a>
                 {% endif %}
 
-                <!-- Update the job details -->
                 <a href="/admin/edit_job/{{ job['id'] }}" class="btn">
                     ✏️ Update
                 </a>
-                <!-- DELETE JOB -->
                 <a href="/admin/delete_job/{{ job['id'] }}"
                    class="btn btn-danger"
                    onclick="return confirm('Delete this job and all related resumes?');">
@@ -173,7 +162,6 @@
                     🧠 Compare Resumes
                 </a>
                 {% endif %}
-                <!-- EXPORT CSV -->
                 {% if job["selected_count"] > 0 %}
                 <a href="/admin/export_csv/{{ job['id'] }}" class="btn">
                     📤 Export CSV
@@ -185,7 +173,6 @@
         </tbody>
     </table>
 
-    <!-- ================= USERS ================= -->
     <h3 style="margin-top:30px;">Registered Users</h3>
 
     <table>
@@ -211,8 +198,6 @@
         </tbody>
     </table>
 
-    <!-- ================= ANALYTICS ================= -->
- <!-- ================= ADVANCED ANALYTICS ================= -->
 <h3 style="margin-top:35px;">📊 Platform Analytics</h3>
 
 <div class="analytics-grid">
@@ -255,13 +240,11 @@
 
 </div>
 
-<!-- ================= CHARTS ================= -->
 <div class="chart-wrapper" style="position: relative; width: 100%; height: 400px;">
     <canvas id="resumeChart"></canvas>
 </div>
 
 </div>
-<!-- ================= CHART SCRIPT ================= -->
 <script>
 new Chart(document.getElementById("resumeChart"), {
     type: "bar",
@@ -270,7 +253,7 @@ new Chart(document.getElementById("resumeChart"), {
         datasets: [{
             label: "Resumes per Job",
             data: {{ job_resume_counts | safe }},
-            backgroundColor: "rgba(99, 102, 241, 0.9)",   // Blue
+            backgroundColor: "rgba(99, 102, 241, 0.9)",  
             borderRadius: 12,
             borderSkipped: false
         }]
