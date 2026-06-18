@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HireStream AI | Future of Recruitment</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #6366f1;
@@ -15,7 +16,6 @@
 
         body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--light); overflow-x: hidden; }
 
-        /* Navbar with Glassmorphism */
         nav {
             display: flex; justify-content: space-between; align-items: center;
             padding: 15px 10%; background: rgba(255, 255, 255, 0.8);
@@ -30,14 +30,31 @@
         .btn-login:hover { background: var(--primary); color: white; }
         .btn-signup { background: var(--primary); color: white; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4); }
 
-        /* Hero Section */
         .hero { padding: 120px 10% 80px; text-align: center; background: radial-gradient(circle at top right, #eef2ff, #ffffff); }
         .hero h1 { font-size: 56px; line-height: 1.1; color: var(--dark); margin-bottom: 20px; }
         .hero span { color: var(--primary); }
         .hero p { font-size: 20px; color: #64748b; max-width: 700px; margin: 0 auto 40px; }
 
-        /* Feature Section */
-        .features-grid { padding: 60px 10%; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .features-grid {
+    padding: 60px 10%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+}
         .card {
             background: white; padding: 40px; border-radius: 24px; border: 1px solid #f1f5f9;
             transition: all 0.4s ease; position: relative; overflow: hidden;
@@ -51,6 +68,27 @@
         .bg-2 { background: #f3e8ff; color: #7e22ce; }
         .bg-3 { background: #dcfce7; color: #15803d; }
         .bg-4 { background: #ffedd5; color: #9a3412; }
+
+        .ai-section {
+            padding: 80px 10%;
+            text-align: center;
+            background: #ffffff;
+        }
+
+        .ai-section h2 {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .ai-section p {
+            max-width: 800px;
+            margin: auto;
+            color: #64748b;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        
     </style>
 </head>
 <body>
@@ -60,7 +98,6 @@
     <div class="nav-links">
         <a href="#features">Features</a>
         <a href="#about">Our AI</a>
-        <a href="#pricing">Pricing</a>
     </div>
     <div class="auth-btns">
         <a href="/login" class="btn btn-login">Login</a>
@@ -70,7 +107,7 @@
 
 <section class="hero">
     <h1>Stop Applying. <br><span>Start Getting Matched.</span></h1>
-    <p>The world's first automated recruitment platform that ranks candidates using AI resume screening and real-world coding assessments.</p>
+    <p>The world's first automated recruitment platform that ranks candidates using AI resume screening and real-world assessments.</p>
     <div style="display: flex; justify-content: center; gap: 20px;">
         <a href="/login" class="btn btn-signup" style="padding: 18px 45px; font-size: 18px;">Upload Resume Now</a>
         <a href="#features" class="btn btn-login" style="padding: 18px 45px; font-size: 18px; border-width: 1px;">How it Works</a>
@@ -81,28 +118,54 @@
     <div class="card">
         <div class="icon-box bg-1"><i class="fas fa-file-invoice"></i></div>
         <h3>AI Resume Parsing</h3>
-        <p>Our neural networks extract skills and experience from your PDF in seconds with 99% accuracy.</p>
+        <p>Our system extracts skills and experience from your PDF in seconds with high accuracy.</p>
     </div>
     <div class="card">
         <div class="icon-box bg-2"><i class="fas fa-brain"></i></div>
         <h3>Technical MCQ</h3>
-        <p>Take a dynamic 30-question test tailored specifically to the job role you are applying for.</p>
+        <p>Take a dynamic test tailored specifically to the job role you are applying for.</p>
     </div>
     <div class="card">
-        <div class="icon-box bg-3"><i class="fas fa-code"></i></div>
-        <h3>Coding Sandbox</h3>
-        <p>Write real code in our integrated IDE. Pass test cases to prove your technical expertise.</p>
+        <div class="icon-box bg-3"><i class="fas fa-layer-group"></i></div>
+        <h3>Skill Matching</h3>
+        <p>Automatically matches your skills with job requirements using intelligent algorithms.</p>
     </div>
     <div class="card">
         <div class="icon-box bg-4"><i class="fas fa-chart-line"></i></div>
         <h3>Dynamic Ranking</h3>
-        <p>Get an instant percentile rank. Top candidates are highlighted directly to the HR managers.</p>
+        <p>Get ranked instantly based on performance and resume quality.</p>
+    </div>
+
+    <!-- NEW FEATURES -->
+    <div class="card">
+        <div class="icon-box bg-1"><i class="fas fa-filter"></i></div>
+        <h3>Smart Filtering</h3>
+        <p>Filters out low-quality resumes automatically using AI thresholds.</p>
+    </div>
+    <div class="card">
+        <div class="icon-box bg-2"><i class="fas fa-bolt"></i></div>
+        <h3>Fast Processing</h3>
+        <p>Processes hundreds of resumes within seconds with minimal latency.</p>
     </div>
 </div>
+
+<!-- OUR AI SECTION -->
+<section class="ai-section" id="about">
+    <h2>Our AI</h2>
+    <p>
+        HireStream AI leverages advanced Natural Language Processing (NLP) and machine learning techniques 
+        to analyze resumes and job descriptions. It evaluates candidate profiles based on skill matching, 
+        contextual understanding, and similarity scoring using TF-IDF and cosine similarity algorithms. 
+        The system ensures unbiased, accurate, and fast recruitment decisions by combining multiple 
+        scoring metrics into a unified intelligent ranking model.
+    </p>
+</section>
+
 <footer style="padding: 40px 10% 20px; text-align: center; background: #f8fafc; color: #94a3b8; font-size: 14px;">
     <p>&copy; 2026 HireStream AI. All rights reserved. 
        <a href="/admin-secure-gate" style="color: inherit; text-decoration: none; cursor: default;">System</a>
     </p>
 </footer>
+
 </body>
 </html>
