@@ -23,7 +23,6 @@
             margin-bottom: 20px;
         }
 
-        /* SCORE BOX */
         .score-box {
             text-align: center;
             padding: 20px;
@@ -39,14 +38,12 @@
             margin: 10px 0;
         }
 
-        /* GRID */
         .compare-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
 
-        /* CARD */
         .card {
             background: #1e293b;
             padding: 20px;
@@ -63,7 +60,6 @@
             margin: 6px 0;
         }
 
-        /* BUTTON */
         .btn {
             display: inline-block;
             margin-top: 15px;
@@ -78,8 +74,7 @@
         .btn:hover {
             background: #4338ca;
         }
-
-        /* WINNER */
+        
         .winner {
             border: 2px solid #22c55e;
             box-shadow: 0 0 15px rgba(34,197,94,0.5);
@@ -103,17 +98,14 @@
 
     <h2>🧠 Resume Comparison</h2>
 
-    <!-- 🔥 SIMILARITY SCORE -->
     <div class="score-box">
         <p>Similarity Score</p>
         <h1>{{ score }}%</h1>
         <small>Higher means both resumes are similar</small>
     </div>
 
-    <!-- 🔥 SIDE BY SIDE -->
     <div class="compare-grid">
 
-        <!-- RESUME 1 -->
         <div class="card {% if winner == 1 %}winner{% endif %}">
             <h3>📄 Resume 1 
                 {% if winner == 1 %}
@@ -130,7 +122,6 @@
             <a href="/view/{{ r1 }}" class="btn" target="_blank">View Resume</a>
         </div>
 
-        <!-- RESUME 2 -->
         <div class="card {% if winner == 2 %}winner{% endif %}">
             <h3>📄 Resume 2 
                 {% if winner == 2 %}
@@ -149,7 +140,6 @@
 
     </div>
 
-    <!-- BACK BUTTON -->
     <div style="text-align:center;">
         <a href="/admin/ranking" class="btn">⬅ Back to Ranking</a>
     </div>
